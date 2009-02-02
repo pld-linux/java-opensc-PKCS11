@@ -5,7 +5,7 @@ Name:		java-opensc-PKCS11
 Version:	0.1.1
 Release:	1
 License:	LGPL v2.1+
-Group:		Development/Languages/Java
+Group:		Libraries/Java
 Source0:	http://www.opensc-project.org/files/opensc-java/opensc-PKCS11-src-%{version}.zip
 # Source0-md5:	b58ebd345e915110b79c6a68d21c2fc3
 URL:		http://www.opensc-project.org/
