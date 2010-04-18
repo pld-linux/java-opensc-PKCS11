@@ -10,12 +10,13 @@ Source0:	http://www.opensc-project.org/files/opensc-java/opensc-PKCS11-src-%{ver
 # Source0-md5:	b58ebd345e915110b79c6a68d21c2fc3
 URL:		http://www.opensc-project.org/
 BuildRequires:	ant
-BuildRequires:	jakarta-commons-logging
+BuildRequires:	java-commons-logging
 # >= 1.1
+BuildRequires:	java-log4j >= 1.2.13
+BuildRequires:	jdk
 BuildRequires:	jpackage-utils
 BuildRequires:	junit >= 4.1
 BuildRequires:	libltdl-devel
-BuildRequires:	logging-log4j >= 1.2.13
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 # for %{_javadir}
