@@ -19,6 +19,7 @@ BuildRequires:	junit >= 4.1
 BuildRequires:	libltdl-devel
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
+BuildRequires:	unzip
 # for %{_javadir}
 Requires:	jpackage-utils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
