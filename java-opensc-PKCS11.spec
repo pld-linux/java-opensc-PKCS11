@@ -1,6 +1,7 @@
+# TODO: fix build without network
 %include	/usr/lib/rpm/macros.java
-Summary:	PKCS#11 provider of the opensc project
-Summary(pl.UTF-8):	Biblioteka z projektu opensc udostępniająca interfejs PKCS#11
+Summary:	PKCS#11 provider of the OpenSC project
+Summary(pl.UTF-8):	Biblioteka z projektu OpenSC udostępniająca interfejs PKCS#11
 Name:		java-opensc-PKCS11
 Version:	0.2.2
 Release:	0.1
@@ -25,33 +26,42 @@ Requires:	jpackage-utils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-PKCS#11 provider of the opensc project.
+PKCS#11 provider of the OpenSC project.
 
 %description -l pl.UTF-8
-Biblioteka z projektu opensc udostępniająca interfejs PKCS#11.
+Biblioteka z projektu OpenSC udostępniająca interfejs PKCS#11.
 
 %prep
 %setup -q -n OpenSC-Java-pkcs11-%{version}
+
+cat >> jni/build/unix/release/config.data <<EOF
+ac CC=%{__cc}
+ac CFLAGS=%{rpmcflags} -fno-stack-protector -Wall
+ac CPPFLAGS=%{rpmcppflags}
+ac LDFLAGS=%{rpmldflags}
+EOF
 
 %build
 # FIXME: update build to use maven
 export JAVA_HOME="%{java_home}"
 
-required_jars="commons-logging log4j junit"
-CLASSPATH=$(build-classpath $required_jars)
-export CLASSPATH
+# TODO: how to disable downloading in maven?
+#required_jars="commons-logging log4j junit"
+#CLASSPATH=$(build-classpath $required_jars)
+#export CLASSPATH
 
-#ant signedjarfile jnidist
-mvn package # FIXME?
+# FIXME: any options required?
+mvn package
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_javadir},%{_libdir}}
 
-# jars
-cp -a dist/tmp/opensc-PKCS11.jar $RPM_BUILD_ROOT%{_javadir}/opensc-PKCS11-%{version}.jar
+# jar
+cp -p target/opensc-PKCS11-%{version}.jar $RPM_BUILD_ROOT%{_javadir}
 ln -s opensc-PKCS11-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/opensc-PKCS11.jar
-install dist/tmp/libopensc-PKCS11-0.1.so $RPM_BUILD_ROOT%{_libdir}
+# jni
+install target/lib/libopensc-PKCS11-0.2.so $RPM_BUILD_ROOT%{_libdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -59,5 +69,5 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README TODO
-%attr(755,root,root) %{_libdir}/libopensc-PKCS11-0.1.so
+%attr(755,root,root) %{_libdir}/libopensc-PKCS11-0.2.so
 %{_javadir}/opensc-PKCS11*.jar
