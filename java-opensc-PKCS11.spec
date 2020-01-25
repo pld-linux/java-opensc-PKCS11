@@ -1,5 +1,4 @@
 # TODO: fix build without network
-%include	/usr/lib/rpm/macros.java
 Summary:	PKCS#11 provider of the OpenSC project
 Summary(pl.UTF-8):	Biblioteka z projektu OpenSC udostępniająca interfejs PKCS#11
 Name:		java-opensc-PKCS11
